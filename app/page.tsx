@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect } from 'react'
-import gsap from 'gsap'
-import Link from "next/link";
-import Image from "next/image";
+import { useEffect } from 'react';
+import gsap from 'gsap';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
   useEffect(() => {
@@ -15,40 +15,14 @@ export default function Home() {
       ease: "power4.inOut"
     });
 
-    tl.to(".c-1 .item", {
-      top: "0",
-      stagger: 0.25,
-      duration: 3,
-      ease: "power4.inOut"
-    }, "-=2");
-
-    tl.to(".c-2 .item", {
-      top: "0",
-      stagger: -0.25,
-      duration: 3,
-      ease: "power4.inOut"
-    }, "-=4");
-
-    tl.to(".c-3 .item", {
-      top: "0",
-      stagger: 0.25,
-      duration: 3,
-      ease: "power4.inOut"
-    }, "-=4");
-
-    tl.to(".c-4 .item", {
-      top: "0",
-      stagger: -0.25,
-      duration: 3,
-      ease: "power4.inOut"
-    }, "-=4");
-
-    tl.to(".c-5 .item", {
-      top: "0",
-      stagger: 0.25,
-      duration: 3,
-      ease: "power4.inOut"
-    }, "-=4");
+    [1, 2, 3, 4, 5].forEach((_, i) => {
+      tl.to(`.c-${i + 1} .item`, {
+        top: "0",
+        stagger: i % 2 === 0 ? 0.25 : -0.25,
+        duration: 3,
+        ease: "power4.inOut"
+      }, "-=4");
+    });
 
     tl.to(".landing-container", {
       scale: 6,
@@ -66,32 +40,24 @@ export default function Home() {
     }, "-=1.5");
   }, []);
 
+  const imageGroups = [
+    { className: "c-1", images: [1, 2, 3, 4, 5] },
+    { className: "c-2", images: [6, 7, 8, 9, 10] },
+    { className: "c-3", images: [11, 12, 14, 13, 15] },
+    { className: "c-4", images: [1, 2, 3, 4, 5] },
+    { className: "c-5", images: [6, 7, 8, 9, 10] },
+  ];
+
   return (
     <>
       <div className="landing-container">
-        {[1, 2, 3, 4, 5].map(i => (
-          <div key={i} className="col c-1 item">
-            <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
-          </div>
-        ))}
-        {[6, 7, 8, 9, 10].map(i => (
-          <div key={i} className="col c-2 item">
-            <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
-          </div>
-        ))}
-        {[11, 12, 14, 13, 15].map(i => (
-          <div key={i} className="col c-3 item">
-            <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
-          </div>
-        ))}
-        {[1, 2, 3, 4, 5].map(i => (
-          <div key={i} className="col c-4 item">
-            <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
-          </div>
-        ))}
-        {[6, 7, 8, 9, 10].map(i => (
-          <div key={i} className="col c-5 item">
-            <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
+        {imageGroups.map((group, idx) => (
+          <div key={idx} className={`col ${group.className}`}>
+            {group.images.map(i => (
+              <div key={i} className="item">
+                <Image src={`/img${i}.jpg`} alt="" width={400} height={600} priority />
+              </div>
+            ))}
           </div>
         ))}
       </div>
