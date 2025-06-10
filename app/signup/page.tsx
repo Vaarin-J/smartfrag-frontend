@@ -113,7 +113,7 @@ export default function SignupPage() {
                 onChange={(e) => setRememberMe(e.target.checked)}
                 className="mr-2"
               />
-              <label htmlFor="remember" className="text-sm text-gray-600">Remember me</label>
+              <label htmlFor="remember" className="text-sm text-gray-100">Remember me</label>
             </div>
           </form>
 

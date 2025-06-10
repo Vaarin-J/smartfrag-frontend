@@ -63,8 +63,19 @@ export default function DashboardPage() {
   const selected = answers[current.id as keyof SurveyAnswers];
 
   const isSelected = (opt: string) =>
-    current.multi ? (selected as string[]).includes(opt) : selected === opt;
+  current.multi ? (selected as string[]).includes(opt) : selected === opt;
 
+  const [showTransition, setShowTransition] = useState(true);
+
+  useEffect(() => {
+    const originalBg = document.body.style.background;
+    document.body.style.background = "#f9fafb"; // or rgba/white to match .about-wrapper
+  
+    return () => {
+      document.body.style.background = originalBg;
+    };
+  }, []);
+  
   // ✅ Single clean useEffect
   useEffect(() => {
     const getUser = async () => {
@@ -130,7 +141,8 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="about-wrapper">
+    <>
+    <div className="about-wrapper fade-in">
       <div className="about-section">
         <h1 className="about-title">
           Welcome, {user?.user_metadata?.name || "User"}!
@@ -194,5 +206,6 @@ export default function DashboardPage() {
         )}
       </div>
     </div>
+    </>
   );
 }
