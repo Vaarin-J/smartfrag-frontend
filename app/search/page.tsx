@@ -85,8 +85,8 @@ export default function SearchPage() {
 
     try {
       const res = await fetch(
-        `http://localhost:8000/search?q=${encodeURIComponent(query)}`
-      );
+        `http://34.229.253.81:8000/search?q=${encodeURIComponent(query)}`
+        );
       const data: SearchResults = await res.json();
       setResults(data);
     } catch (err) {
