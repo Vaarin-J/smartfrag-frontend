@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import FragranceCarousel from "../carouselwheel/page";
+import { User } from "@supabase/supabase-js";
+
 
 const questions = [
   {
@@ -42,7 +44,7 @@ type SurveyAnswers = {
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
 
   const [answers, setAnswers] = useState<SurveyAnswers>({
