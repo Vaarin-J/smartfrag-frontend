@@ -119,7 +119,7 @@ export default function DashboardPage() {
       if (!user) return;
 
       const payload = { user_id: user.id, ...answers };
-      const res = await fetch("http://34.229.253.81:8000/submit-survey", {
+      const res = await fetch("https://perfumai.duckdns.org/submit-survey", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

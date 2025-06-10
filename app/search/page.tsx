@@ -84,9 +84,7 @@ export default function SearchPage() {
     const startTime = Date.now();
 
     try {
-      const res = await fetch(
-        `http://34.229.253.81:8000/search?q=${encodeURIComponent(query)}`
-        );
+      const res = await fetch(`https://perfumai.duckdns.org/search?q=${encodeURIComponent(query)}`);
       const data: SearchResults = await res.json();
       setResults(data);
     } catch (err) {
