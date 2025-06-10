@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
-import gsap from "gsap";
+import { useEffect } from 'react'
+import gsap from 'gsap'
 import Link from "next/link";
 import Image from "next/image";
 
@@ -66,44 +66,33 @@ export default function Home() {
     }, "-=1.5");
   }, []);
 
+  const renderColumn = (className: string, indices: number[]) => (
+    <div className={`col ${className}`}>
+      {indices.map(i => (
+        <div key={i} className="item">
+          <Image
+            src={`/img${i}.jpg`}
+            alt={`Fragrance ${i}`}
+            width={1200}
+            height={1800}
+            quality={100}
+            unoptimized
+            priority
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <>
       <div className="landing-container">
-        <div className="col c-1">
-          {[1, 2, 3, 4, 5].map(i => (
-            <div key={i} className="item">
-              <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
-            </div>
-          ))}
-        </div>
-        <div className="col c-2">
-          {[6, 7, 8, 9, 10].map(i => (
-            <div key={i} className="item">
-              <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
-            </div>
-          ))}
-        </div>
-        <div className="col c-3">
-          {[11, 12, 14, 13, 15].map(i => (
-            <div key={i} className="item">
-              <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
-            </div>
-          ))}
-        </div>
-        <div className="col c-4">
-          {[1, 2, 3, 4, 5].map(i => (
-            <div key={i} className="item">
-              <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
-            </div>
-          ))}
-        </div>
-        <div className="col c-5">
-          {[6, 7, 8, 9, 10].map(i => (
-            <div key={i} className="item">
-              <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
-            </div>
-          ))}
-        </div>
+        {renderColumn("c-1", [1, 2, 3, 4, 5])}
+        {renderColumn("c-2", [6, 7, 8, 9, 10])}
+        {renderColumn("c-3", [11, 12, 14, 13, 15])}
+        {renderColumn("c-4", [1, 2, 3, 4, 5])}
+        {renderColumn("c-5", [6, 7, 8, 9, 10])}
       </div>
 
       <div className="content">
@@ -130,7 +119,7 @@ export default function Home() {
           </div>
         </div>
 
-        <footer></footer>
+        <footer />
       </div>
     </>
   );
