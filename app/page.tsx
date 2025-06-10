@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import gsap from 'gsap'
 import Link from "next/link";
-
+import Image from "next/image";
 
 export default function Home() {
   useEffect(() => {
@@ -69,70 +69,58 @@ export default function Home() {
   return (
     <>
       <div className="landing-container">
-        <div className="col c-1">
-          {[1, 2, 3, 4, 5].map(i => (
-            <div key={i} className="item">
-              <img src={`/img${i}.jpg`} alt="" />
-            </div>
-          ))}
-        </div>
-        <div className="col c-2">
-          {[6, 7, 8, 9, 10].map(i => (
-            <div key={i} className="item">
-              <img src={`/img${i}.jpg`} alt="" />
-            </div>
-          ))}
-        </div>
-        <div className="col c-3">
-          {[11, 12, 14, 13, 15].map(i => (
-            <div key={i} className="item">
-              <img src={`/img${i}.jpg`} alt="" />
-            </div>
-          ))}
-        </div>
-        <div className="col c-4">
-          {[1, 2, 3, 4, 5].map(i => (
-            <div key={i} className="item">
-              <img src={`/img${i}.jpg`} alt="" />
-            </div>
-          ))}
-        </div>
-        <div className="col c-5">
-          {[6, 7, 8, 9, 10].map(i => (
-            <div key={i} className="item">
-              <img src={`/img${i}.jpg`} alt="" />
-            </div>
-          ))}
-        </div>
+        {[1, 2, 3, 4, 5].map(i => (
+          <div key={i} className="col c-1 item">
+            <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
+          </div>
+        ))}
+        {[6, 7, 8, 9, 10].map(i => (
+          <div key={i} className="col c-2 item">
+            <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
+          </div>
+        ))}
+        {[11, 12, 14, 13, 15].map(i => (
+          <div key={i} className="col c-3 item">
+            <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
+          </div>
+        ))}
+        {[1, 2, 3, 4, 5].map(i => (
+          <div key={i} className="col c-4 item">
+            <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
+          </div>
+        ))}
+        {[6, 7, 8, 9, 10].map(i => (
+          <div key={i} className="col c-5 item">
+            <Image src={`/img${i}.jpg`} alt="" width={400} height={600} />
+          </div>
+        ))}
       </div>
 
       <div className="content">
         <nav>
           <div className="nav-item">
-            <a href="/" id="active">Home</a>
+            <Link href="/" id="active">Home</Link>
           </div>
           <div className="nav-item">
-          <Link href="/about">About</Link>
-              </div>
+            <Link href="/about">About</Link>
+          </div>
         </nav>
 
         <div className="hero">
-          {/* Icons removed */}
           <div className="icon" />
           <div className="title"><p>PerfumAi</p></div>
           <div className="icon-2" />
           <div className="hero-buttons">
-          <Link href="/login">
-            <button className="btn login">Log In</button>
-          </Link>
-          <Link href="/signup">
-            <button className="btn signup">Sign Up</button>
-          </Link>
+            <Link href="/login">
+              <button className="btn login">Log In</button>
+            </Link>
+            <Link href="/signup">
+              <button className="btn signup">Sign Up</button>
+            </Link>
+          </div>
         </div>
-        </div>
-          
-        <footer>
-        </footer>
+
+        <footer></footer>
       </div>
     </>
   );

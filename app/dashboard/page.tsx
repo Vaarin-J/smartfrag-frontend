@@ -41,7 +41,6 @@ type SurveyAnswers = {
 };
 
 export default function DashboardPage() {
-
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [authChecked, setAuthChecked] = useState(false);
@@ -53,26 +52,38 @@ export default function DashboardPage() {
     occasion: "",
     season: "",
   });
+
   const [surveyDone, setSurveyDone] = useState(false);
   const [loadingResults, setLoadingResults] = useState(false);
   const [step, setStep] = useState(0);
 
+  const current = questions[step];
+  const selected = answers[current.id as keyof SurveyAnswers];
 
+  const isSelected = (opt: string) =>
+    current.multi ? (selected as string[]).includes(opt) : selected === opt;
 
+  // ✅ Single clean useEffect
   useEffect(() => {
     const getUser = async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) router.push("/login");
-      else setUser(user);
+
+      if (!user) {
+        router.push("/login");
+      } else {
+        setUser(user);
+        setAuthChecked(true);
+      }
     };
     getUser();
-  }, []);
+  }, [router]);
+
+  if (!authChecked) return null;
 
   const handleOptionClick = (option: string, multi: boolean) => {
-    const currentQuestion = questions[step];
-    const key = currentQuestion.id as keyof SurveyAnswers;
+    const key = current.id as keyof SurveyAnswers;
 
     setAnswers((prev) => {
       if (multi) {
@@ -94,18 +105,21 @@ export default function DashboardPage() {
       setStep((prev) => prev + 1);
     } else {
       setLoadingResults(true);
+      if (!user) return;
+
       const payload = { user_id: user.id, ...answers };
       const res = await fetch("http://localhost:8000/submit-survey", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
       if (res.ok) {
-        setSurveyDone(true); // display the carousel
+        setSurveyDone(true);
         setTimeout(() => {
           setLoadingResults(false);
           router.push("/search");
-        }, 6000); // total delay = 6s
+        }, 6000);
       } else {
         setLoadingResults(false);
         alert("Failed to submit survey.");
@@ -113,31 +127,6 @@ export default function DashboardPage() {
     }
   };
 
-  const current = questions[step];
-  const selected = answers[current.id as keyof SurveyAnswers];
-
-  const isSelected = (opt: string) =>
-    current.multi
-      ? (selected as string[]).includes(opt)
-      : selected === opt;
-
-      useEffect(() => {
-        const getUser = async () => {
-          const {
-            data: { user },
-          } = await supabase.auth.getUser();
-          if (!user) {
-            router.push("/login");
-          } else {
-            setUser(user);
-            setAuthChecked(true);
-          }
-        };
-        getUser();
-      }, []);
-    
-      // ✅ Only return conditionally *after* all hooks
-      if (!authChecked) return null;
   return (
     <div className="about-wrapper">
       <div className="about-section">
