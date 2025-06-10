@@ -65,8 +65,6 @@ export default function DashboardPage() {
   const isSelected = (opt: string) =>
   current.multi ? (selected as string[]).includes(opt) : selected === opt;
 
-  const [showTransition, setShowTransition] = useState(true);
-
   useEffect(() => {
     const originalBg = document.body.style.background;
     document.body.style.background = "#f9fafb"; // or rgba/white to match .about-wrapper
@@ -75,7 +73,7 @@ export default function DashboardPage() {
       document.body.style.background = originalBg;
     };
   }, []);
-  
+
   // ✅ Single clean useEffect
   useEffect(() => {
     const getUser = async () => {
