@@ -1,84 +1,91 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-import gsap from 'gsap'
+import { useEffect, useState } from "react";
+import gsap from "gsap";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Home() {
-  useEffect(() => {
-    const tl = gsap.timeline({ delay: 0 });
+  const [isMobile, setIsMobile] = useState(false);
 
-    tl.to(".col", {
-      top: "0",
-      duration: 3,
-      ease: "power4.inOut"
+  useEffect(() => {
+    // Detect mobile on client side
+    setIsMobile(window.innerWidth <= 768);
+
+    // Wait for all .item img elements to finish loading
+    const images = Array.from(document.querySelectorAll(".item img"));
+    const imageLoadPromises = images.map((img) => {
+      const image = img as HTMLImageElement;
+      return image.complete
+        ? Promise.resolve()
+        : new Promise<void>((resolve) => {
+            image.onload = () => resolve();
+            image.onerror = () => resolve(); // fail-safe
+          });
     });
 
-    tl.to(".c-1 .item", {
-      top: "0",
-      stagger: 0.25,
-      duration: 3,
-      ease: "power4.inOut"
-    }, "-=2");
+    Promise.all(imageLoadPromises).then(() => {
+      const tl = gsap.timeline({ delay: 0 });
 
-    tl.to(".c-2 .item", {
-      top: "0",
-      stagger: -0.25,
-      duration: 3,
-      ease: "power4.inOut"
-    }, "-=4");
+      tl.to(".col", {
+        top: "0",
+        duration: 3,
+        ease: "power4.inOut",
+      });
 
-    tl.to(".c-3 .item", {
-      top: "0",
-      stagger: 0.25,
-      duration: 3,
-      ease: "power4.inOut"
-    }, "-=4");
+      const itemConfig = {
+        top: "0",
+        duration: 3,
+        ease: "power4.inOut",
+      };
 
-    tl.to(".c-4 .item", {
-      top: "0",
-      stagger: -0.25,
-      duration: 3,
-      ease: "power4.inOut"
-    }, "-=4");
+      tl.to(".c-1 .item", { ...itemConfig, stagger: 0.25 }, "-=2");
+      tl.to(".c-2 .item", { ...itemConfig, stagger: -0.25 }, "-=4");
+      tl.to(".c-3 .item", { ...itemConfig, stagger: 0.25 }, "-=4");
+      tl.to(".c-4 .item", { ...itemConfig, stagger: -0.25 }, "-=4");
+      tl.to(".c-5 .item", { ...itemConfig, stagger: 0.25 }, "-=4");
 
-    tl.to(".c-5 .item", {
-      top: "0",
-      stagger: 0.25,
-      duration: 3,
-      ease: "power4.inOut"
-    }, "-=4");
+      tl.to(
+        ".landing-container",
+        {
+          scale: 6,
+          duration: 4,
+          ease: "power4.inOut",
+        },
+        "-=1.8"
+      );
 
-    tl.to(".landing-container", {
-      scale: 6,
-      duration: 4,
-      ease: "power4.inOut"
-    }, "-=1.8");
+      tl.to(
+        ".nav-item a, .title p, .hero-buttons button",
+        {
+          top: 0,
+          opacity: 1,
+          stagger: 0.075,
+          duration: 1,
+          pointerEvents: "auto",
+          ease: "power3.out",
+        },
+        "-=1.5"
+      );
 
-    tl.to(".nav-item a, .title p, .hero-buttons button", {
-      top: 0,
-      opacity: 1,
-      stagger: 0.075,
-      duration: 1,
-      pointerEvents: "auto",
-      ease: "power3.out",
-    }, "-=1.5");
-
-    tl.to(".nav-glass-button", {
-      y: 0,
-      opacity: 1,
-      pointerEvents: "auto",
-      stagger: 0.1,
-      duration: 1,
-      ease: "power3.out",
-    }, "-=1.5");
-    
+      tl.to(
+        ".nav-glass-button",
+        {
+          y: 0,
+          opacity: 1,
+          pointerEvents: "auto",
+          stagger: 0.1,
+          duration: 1,
+          ease: "power3.out",
+        },
+        "-=1.5"
+      );
+    });
   }, []);
 
   const renderColumn = (className: string, indices: number[]) => (
     <div className={`col ${className}`}>
-      {indices.map(i => (
+      {indices.map((i) => (
         <div key={i} className="item">
           <Image
             src={`/img${i}.jpg`}
@@ -87,8 +94,15 @@ export default function Home() {
             height={1800}
             quality={100}
             unoptimized
-            priority
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            loading={isMobile ? "lazy" : "eager"}
+            style={{
+              objectFit: "cover",
+              width: "100%",
+              height: "100%",
+              willChange: "transform",
+              transform: "translateZ(0)",
+              backfaceVisibility: "hidden",
+            }}
           />
         </div>
       ))}
@@ -106,22 +120,24 @@ export default function Home() {
       </div>
 
       <div className="content">
-      <nav className="nav">
-  <div className="nav-item">
-    <Link href="/">
-      <button className="nav-glass-button">Home</button>
-    </Link>
-  </div>
-  <div className="nav-item">
-    <Link href="/about">
-      <button className="nav-glass-button">About</button>
-    </Link>
-  </div>
-</nav>
+        <nav className="nav">
+          <div className="nav-item">
+            <Link href="/">
+              <button className="nav-glass-button">Home</button>
+            </Link>
+          </div>
+          <div className="nav-item">
+            <Link href="/about">
+              <button className="nav-glass-button">About</button>
+            </Link>
+          </div>
+        </nav>
 
         <div className="hero">
           <div className="icon" />
-          <div className="title"><p>PerfumAi</p></div>
+          <div className="title">
+            <p>PerfumAi</p>
+          </div>
           <div className="icon-2" />
           <div className="hero-buttons">
             <Link href="/login">

@@ -174,8 +174,8 @@ footer {
   position: relative;
   flex: 1;
   width: 100%;
-  background: gainsboro;
   overflow: hidden;
+  background-color: black;
 }
 
 .c-1,
