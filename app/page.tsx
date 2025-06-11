@@ -90,13 +90,13 @@ export default function Home() {
           <Image
             src={`/img${i}.jpg`}
             alt={`Fragrance ${i}`}
-            width={1200}
-            height={1800}
-            quality={100}
-            unoptimized
-            loading={isMobile ? "lazy" : "eager"}
+            width={isMobile ? 2400 : 1200}  // higher res only on mobile
+            height={isMobile ? 3600 : 1800}
+            quality={isMobile ? 90 : 80}    // better quality only on mobile
+            loading={isMobile ? "eager" : "eager"} // you can still lazy load if desired
             style={{
               objectFit: "cover",
+              objectPosition: "center",
               width: "100%",
               height: "100%",
               willChange: "transform",
