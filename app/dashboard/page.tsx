@@ -149,7 +149,7 @@ export default function DashboardPage() {
         {!surveyDone && !loadingResults ? (
           <>
             <p
-              className="about-paragraph"
+              className="about-paragraph step-text"
               style={{ fontWeight: "bold", fontSize: "1.25rem", marginBottom: "1rem" }}
             >
               Step {step + 1} of {questions.length}: {current.text}

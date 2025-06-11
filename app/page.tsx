@@ -64,6 +64,16 @@ export default function Home() {
       pointerEvents: "auto",
       ease: "power3.out",
     }, "-=1.5");
+
+    tl.to(".nav-glass-button", {
+      y: 0,
+      opacity: 1,
+      pointerEvents: "auto",
+      stagger: 0.1,
+      duration: 1,
+      ease: "power3.out",
+    }, "-=1.5");
+    
   }, []);
 
   const renderColumn = (className: string, indices: number[]) => (
@@ -96,14 +106,18 @@ export default function Home() {
       </div>
 
       <div className="content">
-        <nav>
-          <div className="nav-item">
-            <Link href="/" id="active">Home</Link>
-          </div>
-          <div className="nav-item">
-            <Link href="/about">About</Link>
-          </div>
-        </nav>
+      <nav className="nav">
+  <div className="nav-item">
+    <Link href="/">
+      <button className="nav-glass-button">Home</button>
+    </Link>
+  </div>
+  <div className="nav-item">
+    <Link href="/about">
+      <button className="nav-glass-button">About</button>
+    </Link>
+  </div>
+</nav>
 
         <div className="hero">
           <div className="icon" />

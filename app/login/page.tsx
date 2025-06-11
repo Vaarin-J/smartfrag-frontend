@@ -92,7 +92,7 @@ export default function LoginPage() {
 
             <button type="submit" className="btn-submit mt-2">Sign in</button>
 
-            <div className="flex items-center mt-4">
+            <div className="remember-me">
               <input
                 type="checkbox"
                 id="remember"

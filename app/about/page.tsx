@@ -7,25 +7,21 @@ import Link from "next/link";
 
 
 export default function AboutPage() {
-  useEffect(() => {
-    // Disable scroll
-    document.body.style.overflow = "hidden";
-  
-    // Re-enable scroll on unmount
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, []);
+ 
   return (
     <div> 
       <nav className="nav nav-about nav-dark">
-        <div className="nav-item" id="active">
-          <Link href="/" >Home</Link>
-        </div>
-        <div className="nav-item">
-          <Link href="/about">About</Link>
-        </div>
-      </nav>
+  <div className="nav-item">
+    <Link href="/">
+      <button className="nav-glass-button">Home</button>
+    </Link>
+  </div>
+  <div className="nav-item">
+    <Link href="/about">
+      <button className="nav-glass-button">About</button>
+    </Link>
+  </div>
+</nav>
 
       <div className="about-wrapper">
         <div className="about-section">
